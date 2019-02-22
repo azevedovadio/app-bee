@@ -27,7 +27,6 @@ namespace AppBee.Monitors
 
             _workerThread = new Thread(DoWork);
             _workerThread.Start();
-
         }
 
         private void DoWork()
@@ -50,24 +49,18 @@ namespace AppBee.Monitors
                 () => { return UserInfoHelper.GetCurrentUserName(); },
                 () => { return MemoryInfoHelper.GetUsagePercentage().ToString() + "%"; },
                 () => { return ProcessInfoHelper.GetCurrentCpuUsage().ToString() + "%"; },
+                () => { return TimeSpan.FromMilliseconds(UserInfoHelper.GetIdleTime()).ToString(); },
+                () => { return string.Join(";", ProcessInfoHelper.GetListOfProcesses()); }
             };
 
             var sendPrintScreen = new List<Func<string>>()
             {
                 () => "PRINTSCREEN",
-                () =>
-                {
-                    ScreenCapture sc = new ScreenCapture();
-                    Image img = sc.CaptureScreen();
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        img.Save(ms, ImageFormat.Png);
-                        byte[] imageBytes = ms.ToArray();
-                        string base64String = Convert.ToBase64String(imageBytes);
-                        return base64String;
-                    }
-                }
+                () => { return NetworkInfoHelper.GetLocalIPAddress(); },
+                () => { return Environment.MachineName; }
             };
+
+            var sc = new ScreenCapture();
 
             while (true)
             {
@@ -89,7 +82,7 @@ namespace AppBee.Monitors
 
                             if (AppConfiguration.Instance.EnablePrintScreen)
                             {
-                                service.SendMessage(GetMessage(sendPrintScreen));
+                                sc.CaptureScreen().ToList().ForEach(print => service.SendMessage(string.Join(",", GetMessage(sendPrintScreen), print)));
                             }
                         }
                         Console.WriteLine();

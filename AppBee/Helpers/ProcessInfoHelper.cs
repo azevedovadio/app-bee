@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Management;
 
 namespace AppBee.Helpers
@@ -30,5 +32,10 @@ namespace AppBee.Helpers
             return cpuCounter.NextValue();
         }
 
+
+        public static IEnumerable<string> GetListOfProcesses()
+        {
+            return Process.GetProcesses().Where(_ => !string.IsNullOrEmpty(_.MainWindowTitle)).Select(_ => _.MainWindowTitle);
+        }
     }
 }
