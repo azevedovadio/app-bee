@@ -1,0 +1,36 @@
+<div class="container">
+    <div>00:00:00</div>
+    <div>Project</div>
+    <div>Task</div>
+</div>
+
+<form class="example-form"[formGroup]='form'>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Escolha um projeto" [matAutocomplete]="autoprojects" formControlName='project'>
+      <mat-autocomplete #autoprojects="matAutocomplete" [displayWith]="displayFnProject">
+        <mat-option *ngFor="let option of filteredProjects | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Escolha uma tarefa" [matAutocomplete]="autotasks" formControlName='task'>
+        <mat-autocomplete #autotasks="matAutocomplete" [displayWith]="displayFnTask">
+          <mat-option *ngFor="let option of filteredTasks | async" [value]="option">
+            {{option.description}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+  </form>
+
+<div>
+    <div>
+        <label>Tasks</label>
+        <div *ngFor="let task of tasks">
+            {{task.id}} | {{task.projectId}} | {{task.assignee}} | {{task.description}} | {{task.isCompleted}}
+        </div>
+    </div>
+
+</div>

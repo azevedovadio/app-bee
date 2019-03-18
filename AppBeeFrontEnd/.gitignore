@@ -1,0 +1,12 @@
+# Visual Studio Code User-specific files
+.vscode
+
+# Node Modules folder and files
+node_modules
+npm-debug.log
+debug.log
+
+*.js.map
+dist
+
+src/environment.js

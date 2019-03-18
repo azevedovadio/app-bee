@@ -1,0 +1,10 @@
+// ./app/shared/shared.module.ts
+import { NgModule } from '@angular/core';
+
+@NgModule({
+    declarations: [
+    ],
+    exports: [
+    ]
+})
+export class SharedModule { }

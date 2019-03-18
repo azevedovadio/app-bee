@@ -18,9 +18,6 @@ namespace AppBee
         private static readonly ILog Logger;
         private AppBeeMonitor monitor;
 
-
-
-
         static AppBee()
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
