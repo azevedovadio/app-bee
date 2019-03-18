@@ -1,6 +1,7 @@
 ﻿using AppBeeWebAPI.Board;
 using AppBeeWebAPI.Model;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -15,9 +16,22 @@ namespace AppBeeWebAPI.Controller
             activityBoard = board;
         }
 
-        public void Post(Activity activity)
+        public Activity Post(Activity activity)
         {
+            if(activity.id == null)
+            {
+                activity.id = Guid.NewGuid();
+            }
+
+            var current = activityBoard.GetActivities().FirstOrDefault(_ => _.EndDate == null);
+            if(current != null)
+            {
+                current.EndDate = DateTime.Now;
+            }
+
             activityBoard.Add(activity);
+
+            return activity;
            
         }
 

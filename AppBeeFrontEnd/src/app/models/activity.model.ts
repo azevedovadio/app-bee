@@ -1,6 +1,6 @@
 export interface Activity {
-    id: string;
+    projectId: number;
     taskId: number;
     startDate: Date;
-    endDate: Date;
+    endDate?: Date;
 }

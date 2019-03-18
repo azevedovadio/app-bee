@@ -70,11 +70,5 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
         })
-        ,
-        new CopyWebpackPlugin([
-            {from:'src/assets/images',to:'images'},
-            {from:'src/assets/videos',to:'videos'},
-            {from:'src/app/locale',to:'data/[name].js' }
-        ])
     ]
 }

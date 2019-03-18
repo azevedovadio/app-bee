@@ -1,36 +1,27 @@
-<div class="container">
-    <div>00:00:00</div>
-    <div>Project</div>
-    <div>Task</div>
-</div>
+<form class="example-form" [formGroup]='form'>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Escolha um projeto" [matAutocomplete]="autoprojects" formControlName='project'>
+    <mat-autocomplete #autoprojects="matAutocomplete" (opened)="projectOpened()" (optionSelected)="onProjectChanged($event)" [displayWith]="displayProject">
+      <mat-option *ngFor="let option of filteredProjects | async" [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-<form class="example-form"[formGroup]='form'>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Escolha um projeto" [matAutocomplete]="autoprojects" formControlName='project'>
-      <mat-autocomplete #autoprojects="matAutocomplete" [displayWith]="displayFnProject">
-        <mat-option *ngFor="let option of filteredProjects | async" [value]="option">
-          {{option.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Escolha uma tarefa" [matAutocomplete]="autotasks" formControlName='task'>
+    <mat-autocomplete #autotasks="matAutocomplete" (opened)="taskOpened()" (optionSelected)="onTaskChanged($event)" [displayWith]="displayTask">
+      <mat-option *ngFor="let option of filteredTasks | async" [value]="option">
+        {{option.description}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-        <input matInput placeholder="Escolha uma tarefa" [matAutocomplete]="autotasks" formControlName='task'>
-        <mat-autocomplete #autotasks="matAutocomplete" [displayWith]="displayFnTask">
-          <mat-option *ngFor="let option of filteredTasks | async" [value]="option">
-            {{option.description}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+  <button mat-button [disabled]="isDisabled()" (click)="start()">Start!</button>
+  
 
-  </form>
-
-<div>
-    <div>
-        <label>Tasks</label>
-        <div *ngFor="let task of tasks">
-            {{task.id}} | {{task.projectId}} | {{task.assignee}} | {{task.description}} | {{task.isCompleted}}
-        </div>
-    </div>
-
-</div>
+  <div *ngIf="currentActivity !== undefined">
+    <h1>{{currentActivity.projectName}}    -    {{currentActivity.taskName}} </h1>
+    <timespan [start]="currentActivity.startDate"></timespan>
+  </div>
+</form>

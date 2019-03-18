@@ -15,6 +15,8 @@ import { SharedModule } from './shared.module';
 import { ProjectService } from './services/project.service';
 import { TaskService } from './services/task.service';
 import { MaterialModule } from './material.module';
+import { ActivityService } from './services/activity.service';
+import { TimespanComponent } from './components/timespan/timespan.component';
 
 
 
@@ -27,17 +29,20 @@ import { MaterialModule } from './material.module';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+
     ],
     declarations: [
         AppComponent,
         HomeComponent,
-        LoadingComponent
+        LoadingComponent,
+        TimespanComponent
     ],
     bootstrap: [AppComponent],
     providers: [
         ProjectService,
-        TaskService
+        TaskService,
+        ActivityService
     ]
 
 })
